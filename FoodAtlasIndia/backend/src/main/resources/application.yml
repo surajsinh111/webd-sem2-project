@@ -7,25 +7,17 @@ spring:
     name: YatraMind
 
   # --- Database (H2 for dev, switch to PostgreSQL for production) ---
+  # --- Database ---
   datasource:
-    url: jdbc:h2:mem:yatraminddb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
+      ddl-auto: update
 
   # --- Jackson ---
   jackson:
@@ -43,8 +35,6 @@ app:
     secret: YatraMindSuperSecretKeyForJWTToken2026MakeItLongEnoughForHS512Algorithm!!
     access-token-expiration: 1800000    # 30 minutes
     refresh-token-expiration: 604800000  # 7 days
-
-# --- CORS ---
   cors:
     allowed-origins: http://localhost:5173,http://localhost:3000
     allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
